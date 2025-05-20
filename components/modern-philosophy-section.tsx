@@ -173,17 +173,7 @@ export default function ModernHeroSection() {
                 </a>
               </Button>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 rounded-full px-8 py-6 text-lg transition-all duration-300"
-                asChild
-              >
-                <a href="tel:+41797591983">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Jetzt anrufen
-                </a>
-              </Button>
+ 
             </div>
           </div>
 
