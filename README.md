@@ -8,7 +8,7 @@ FLINK SAUBER is a modern, responsive website for a professional cleaning service
 
 ## Live Demo
 
-Visit the live site: [https://flink-sauber.vercel.app](https://flink-sauber.vercel.app)
+Visit the live site: [https://www.flink-sauber.li](https://www.flink-sauber.li)
 
 ## Features
 
