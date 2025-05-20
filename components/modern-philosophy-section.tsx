@@ -129,7 +129,7 @@ export default function ModernHeroSection() {
                 </AnimatePresence>
 
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white mt-4">
-                     <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto ml-12" priority />
+                     <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto ml-8" priority />
                   <span className="block">FLINK</span>
                   <span className="block bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
                     SAUBER
@@ -173,7 +173,17 @@ export default function ModernHeroSection() {
                 </a>
               </Button>
 
- 
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 rounded-full px-8 py-6 text-lg transition-all duration-300"
+                asChild
+              >
+                <a href="tel:+41797591983">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Jetzt anrufen
+                </a>
+              </Button>
             </div>
           </div>
 
