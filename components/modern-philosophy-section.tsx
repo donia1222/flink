@@ -129,11 +129,13 @@ export default function ModernHeroSection() {
                 </AnimatePresence>
 
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white mt-4">
+                     <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto ml-12" priority />
                   <span className="block">FLINK</span>
                   <span className="block bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
                     SAUBER
                   </span>
                 </h1>
+                
                 <p className="mt-4 text-xl md:text-2xl text-white/90">Ihr Premium-Reinigungsspezialist</p>
               </div>
             </div>
