@@ -3,13 +3,15 @@
 import { useRef, useState, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import SectionTitleAnimation from "@/components/section-title-animation"
 
 interface GalleryImage {
+  id: number
   src: string
   alt: string
   category?: string
+  description?: string
 }
 
 export default function EnhancedParallaxGallery() {
@@ -18,15 +20,9 @@ export default function EnhancedParallaxGallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [activeFilter, setActiveFilter] = useState<string>("all")
   const [isHovering, setIsHovering] = useState<number | null>(null)
-
-  const images: GalleryImage[] = [
-    { src: "/348816175_1387176375468600_5311893152245790209_n.jpg", alt: "Sauberes Wohnzimmer", category: "wohnung" },
-    { src: "/348816175_1387176375468600_5311893152245790209_n19.jpg", alt: "Professionelle Fensterreinigung", category: "spezial" },
-    { src: "/gallery-3.png", alt: "Büroreinigung", category: "buero" },
-    { src: "/gallery-4.png", alt: "Teppichreinigung", category: "spezial" },
-    { src: "/d351e0c4-1d78-42c2-9114-8456599d11f8.jpg", alt: "Badezimmerreinigung", category: "wohnung" },
-    { src: "/2e94205f-37f1-41a1-be23-285ab9e00452.jpg", alt: "Küchenreinigung", category: "wohnung" },
-  ]
+  const [images, setImages] = useState<GalleryImage[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const categories = [
     { id: "all", name: "Alle" },
@@ -35,12 +31,37 @@ export default function EnhancedParallaxGallery() {
     { id: "spezial", name: "Spezialreinigung" },
   ]
 
-  const filteredImages = activeFilter === "all" ? images : images.filter((image) => image.category === activeFilter)
-
+  // Cargar imágenes desde el servidor PHP
   useEffect(() => {
-    // Initialize the imagesLoaded state with false values for each image
-    setImagesLoaded(new Array(images.length).fill(false))
-  }, [images.length])
+    const fetchImages = async () => {
+      setIsLoading(true)
+      try {
+        const url =
+          activeFilter === "all"
+            ? "https://web.lweb.ch/flink/obtenerimagen.php"
+            : `https://web.lweb.ch/flink/obtenerimagen.php?categoria=${activeFilter}`
+
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error("Error al cargar las imágenes")
+        }
+
+        const data = await response.json()
+        setImages(data)
+        setImagesLoaded(new Array(data.length).fill(false))
+        setError(null)
+      } catch (err) {
+        setError("Error al cargar las imágenes. Por favor, inténtalo de nuevo.")
+        console.error(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchImages()
+  }, [activeFilter])
+
+  const filteredImages = images
 
   const handleImageLoad = (index: number) => {
     setImagesLoaded((prev) => {
@@ -95,7 +116,7 @@ export default function EnhancedParallaxGallery() {
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-sky-50 rounded-full opacity-50 transform translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-blue-50 rounded-full opacity-50 transform -translate-x-1/2 translate-y-1/2" />
 
-        {/* Grid pattern - Added the same grid pattern as in services section */}
+        {/* Grid pattern */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="gallery-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -130,12 +151,33 @@ export default function EnhancedParallaxGallery() {
           ))}
         </div>
 
+        {/* Loading state */}
+        {isLoading && (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
+          </div>
+        )}
+
+        {/* Error state */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!isLoading && !error && filteredImages.length === 0 && (
+          <div className="text-center py-10">
+            <p className="text-gray-500 mb-4">No hay imágenes disponibles en esta categoría.</p>
+          </div>
+        )}
+
         {/* Gallery grid */}
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" layout>
           <AnimatePresence>
             {filteredImages.map((image, index) => (
               <motion.div
-                key={`${image.src}-${index}`}
+                key={`${image.id}-${index}`}
                 layout
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -146,18 +188,20 @@ export default function EnhancedParallaxGallery() {
                 onMouseLeave={() => setIsHovering(null)}
                 onClick={() => openLightbox(index)}
               >
-                <Image
-                  src={image.src || "/placeholder.svg?height=400&width=600&query=clean room"}
-                  alt={image.alt}
-                  fill
-                  className="object-cover transition-transform duration-700"
-                  style={{
-                    transform: isHovering === index ? "scale(1.1)" : "scale(1)",
-                  }}
-                  onLoad={() => handleImageLoad(index)}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={index < 3}
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={image.src || "/placeholder.svg?height=400&width=600&query=clean room"}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-700"
+                    style={{
+                      transform: isHovering === index ? "scale(1.1)" : "scale(1)",
+                    }}
+                    onLoad={() => handleImageLoad(index)}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={index < 3}
+                  />
+                </div>
 
                 {/* Hover overlay */}
                 <div
@@ -186,7 +230,7 @@ export default function EnhancedParallaxGallery() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage !== null && (
+        {selectedImage !== null && filteredImages[selectedImage] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -246,6 +290,9 @@ export default function EnhancedParallaxGallery() {
                 <p className="text-sky-300">
                   {categories.find((c) => c.id === filteredImages[selectedImage].category)?.name || "Allgemein"}
                 </p>
+                {filteredImages[selectedImage].description && (
+                  <p className="text-white/80 mt-2">{filteredImages[selectedImage].description}</p>
+                )}
               </div>
             </motion.div>
           </motion.div>
