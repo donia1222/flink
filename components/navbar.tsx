@@ -118,9 +118,7 @@ export default function NavbarWithIcons() {
     return (
       <header className="fixed top-0 left-0 right-0 z-50 py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto" />
-          </div>
+
         </div>
       </header>
     )
@@ -132,7 +130,7 @@ export default function NavbarWithIcons() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo - sin fondo */}
           <Link href="/#home" className="flex items-center">
-            <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto" priority />
+           
           </Link>
 
           {/* Desktop Navigation */}
