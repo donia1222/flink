@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Lock } from "lucide-react"
+import { X, Lock } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 
 interface LoginModalProps {
@@ -18,7 +18,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  // Cerrar modal con Escape
+  // Modal mit Escape schließen
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -30,27 +30,36 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [isOpen, onClose])
 
-  // Manejar envío del formulario
+  // Formular-Übermittlung verarbeiten
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
 
     try {
-      // Verificar contraseña (en un entorno real, esto se haría en el servidor)
-      // Aquí estamos usando una contraseña hardcodeada para simplificar
-      if (password === "Aflink2025") {
-        // Guardar estado de autenticación en localStorage
+      // Passwort über Server-API überprüfen
+      const response = await fetch("/api/verify-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        // Authentifizierungsstatus im localStorage speichern
         localStorage.setItem("isAuthenticated", "true")
-        localStorage.setItem("authExpiry", (Date.now() + 24 * 60 * 60 * 1000).toString()) // 24 horas
+        localStorage.setItem("authExpiry", (Date.now() + 24 * 60 * 60 * 1000).toString()) // 24 Stunden
 
         onLogin()
         onClose()
       } else {
-        setError("Contraseña incorrecta")
+        setError("Falsches Passwort")
       }
     } catch (err) {
-      setError("Error al iniciar sesión")
+      setError("Fehler beim Anmelden")
       console.error(err)
     } finally {
       setIsLoading(false)
@@ -75,7 +84,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-xl font-semibold">Acceso Administrativo</h2>
+              <h2 className="text-xl font-semibold">Administrativer Zugang</h2>
               <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-100 transition-colors">
                 <X className="h-5 w-5" />
               </button>
@@ -89,13 +98,13 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
               </div>
 
               <p className="text-center text-gray-600 mb-6">
-                Introduce la contraseña para acceder al panel de administración
+                Geben Sie das Passwort ein, um auf das Administrationsbereich zuzugreifen
               </p>
 
               <div className="space-y-4">
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                    Contraseña
+                    Passwort
                   </label>
                   <input
                     id="password"
@@ -110,7 +119,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded-md text-sm">{error}</div>}
 
                 <Button type="submit" className="w-full bg-sky-500 hover:bg-sky-600" disabled={isLoading}>
-                  {isLoading ? "Verificando..." : "Iniciar Sesión"}
+                  {isLoading ? "Überprüfung..." : "Anmelden"}
                 </Button>
               </div>
             </form>

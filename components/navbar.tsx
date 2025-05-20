@@ -129,11 +129,7 @@ export default function NavbarWithIcons() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isServicePage
-            ? "bg-white/90 shadow-md backdrop-blur-md py-2"
-            : "bg-black/40 backdrop-blur-sm py-4"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 shadow-md backdrop-blur-md py-2`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
@@ -158,12 +154,8 @@ export default function NavbarWithIcons() {
                 href={isServicePage ? `/${item.href}` : item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
                   activeSection === item.href.substring(1)
-                    ? isScrolled || isServicePage
-                      ? "text-sky-600 bg-sky-50"
-                      : "text-white bg-sky-500/40"
-                    : isScrolled || isServicePage
-                      ? "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
-                      : "text-white hover:text-white hover:bg-sky-500/40"
+                    ? "text-sky-600 bg-sky-50"
+                    : "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
                 }`}
                 onClick={(e) => {
                   if (!isServicePage) {
@@ -187,16 +179,11 @@ export default function NavbarWithIcons() {
             {/* Botón de Admin */}
             <button
               onClick={() => (isAuthenticated ? router.push("/admin/gallery") : setIsLoginModalOpen(true))}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                isScrolled || isServicePage
-                  ? "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
-                  : "text-white hover:text-white hover:bg-sky-500/40"
-              }`}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center text-gray-700 hover:text-sky-600 hover:bg-sky-50`}
             >
               <span className="mr-1.5">
                 <Settings className="h-4 w-4" />
               </span>
-
             </button>
           </nav>
 
@@ -204,18 +191,10 @@ export default function NavbarWithIcons() {
           <div className="hidden md:flex items-center space-x-2">
             {isAuthenticated && (
               <Button size="sm" variant="outline" onClick={handleLogout} className="rounded-full">
-               Logout
+                Logout
               </Button>
             )}
-            <Button
-              size="sm"
-              className={`rounded-full ${
-                isScrolled || isServicePage
-                  ? "bg-sky-500 hover:bg-sky-600 text-white"
-                  : "bg-sky-500 hover:bg-sky-600 text-white"
-              }`}
-              asChild
-            >
+            <Button size="sm" className={`rounded-full bg-sky-500 hover:bg-sky-600 text-white`} asChild>
               <a href="tel:+41797591983">
                 <Phone className="h-4 w-4 mr-2" />
                 079 759 19 83
@@ -228,7 +207,7 @@ export default function NavbarWithIcons() {
             {/* Botón de Admin en móvil */}
             <button
               onClick={() => (isAuthenticated ? router.push("/admin/gallery") : setIsLoginModalOpen(true))}
-              className={`p-2 rounded-md ${isScrolled || isServicePage ? "text-gray-700" : "text-white"}`}
+              className={`p-2 rounded-md text-gray-700`}
               aria-label=""
             >
               <Settings className="h-5 w-5" />
@@ -239,11 +218,7 @@ export default function NavbarWithIcons() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
-                <X className={isScrolled || isServicePage ? "text-gray-700" : "text-white"} />
-              ) : (
-                <Menu className={isScrolled || isServicePage ? "text-gray-700" : "text-white"} />
-              )}
+              {mobileMenuOpen ? <X className="text-gray-700" /> : <Menu className="text-gray-700" />}
             </button>
           </div>
         </div>
@@ -297,7 +272,7 @@ export default function NavbarWithIcons() {
                     <span className="mr-3 text-sky-500">
                       <LogIn className="h-4 w-4" />
                     </span>
-                 Abmelden
+                    Abmelden
                   </button>
                 )}
 
