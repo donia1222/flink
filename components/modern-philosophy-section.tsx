@@ -97,7 +97,7 @@ export default function ModernHeroSection() {
       </motion.div>
 
       {/* Content overlay */}
-      <div className="relative z-20 h-full flex flex-col justify-center  mt-8">
+      <div className="relative z-20 h-full flex flex-col justify-center">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             {/* Main heading with animated gradient */}
