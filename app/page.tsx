@@ -12,6 +12,8 @@ import FancyLoader from "@/components/fancy-loader"
 import CookieConsent from "@/components/cookie-consent"
 import ScrollToTop from "@/components/scroll-to-top"
 import BeforeAfterComparison from "@/components/before-after-comparison"
+import ImagenText from "@/components/imagenTexs"
+
 
 // Dynamically import heavy components to improve initial load time
 const TestimonialSlider = dynamic(() => import("@/components/testimonial-slider"), {

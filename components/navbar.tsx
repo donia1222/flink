@@ -134,7 +134,7 @@ export default function NavbarWithIcons() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1 bg-white backdrop-blur-sm p-2 rounded-lg shadow-sm">
+          <nav className="hidden md:flex items-center space-x-1 bg-white backdrop-blur-sm p-2 rounded-full shadow-sm">
             {navItems.map((item) => (
               <Link
                 key={item.name}
