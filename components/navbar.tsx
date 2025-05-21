@@ -116,11 +116,9 @@ export default function NavbarWithIcons() {
   // If not mounted on the client, show a basic navbar
   if (!isMounted) {
     return (
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 shadow-md backdrop-blur-md py-2">
+      <header className="fixed top-0 left-0 right-0 z-50 py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto" />
-          </div>
+
         </div>
       </header>
     )
@@ -128,42 +126,23 @@ export default function NavbarWithIcons() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isServicePage
-            ? "bg-white/90 shadow-md backdrop-blur-md py-2"
-            : "bg-black/40 backdrop-blur-sm py-4"
-        }`}
-      >
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
+          {/* Logo - sin fondo */}
           <Link href="/#home" className="flex items-center">
-            <Image
-              src="/logo.png"
-              alt="FLINKSAUBER Logo"
-              width={150}
-              height={40}
-              className={`h-10 w-auto transition-opacity duration-300 ${
-                isScrolled || isServicePage ? "opacity-100" : "opacity-100"
-              }`}
-              priority
-            />
+           
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-1 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={isServicePage ? `/${item.href}` : item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
                   activeSection === item.href.substring(1)
-                    ? isScrolled || isServicePage
-                      ? "text-sky-600 bg-sky-50"
-                      : "text-white bg-sky-500/40"
-                    : isScrolled || isServicePage
-                      ? "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
-                      : "text-white hover:text-white hover:bg-sky-500/40"
+                    ? "text-sky-600 bg-sky-50"
+                    : "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
                 }`}
                 onClick={(e) => {
                   if (!isServicePage) {
@@ -184,38 +163,25 @@ export default function NavbarWithIcons() {
               </Link>
             ))}
 
-            {/* Botón de Admin */}
+            {/* Botón de Admin en desktop */}
             <button
               onClick={() => (isAuthenticated ? router.push("/admin/gallery") : setIsLoginModalOpen(true))}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center ${
-                isScrolled || isServicePage
-                  ? "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
-                  : "text-white hover:text-white hover:bg-sky-500/40"
-              }`}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center text-gray-700 hover:text-sky-600 hover:bg-sky-50`}
             >
               <span className="mr-1.5">
                 <Settings className="h-4 w-4" />
               </span>
-
             </button>
           </nav>
 
-          {/* Contact Button */}
+          {/* Contact Button - sin fondo */}
           <div className="hidden md:flex items-center space-x-2">
             {isAuthenticated && (
               <Button size="sm" variant="outline" onClick={handleLogout} className="rounded-full">
-               Logout
+                Logout
               </Button>
             )}
-            <Button
-              size="sm"
-              className={`rounded-full ${
-                isScrolled || isServicePage
-                  ? "bg-sky-500 hover:bg-sky-600 text-white"
-                  : "bg-sky-500 hover:bg-sky-600 text-white"
-              }`}
-              asChild
-            >
+            <Button size="sm" className="rounded-full bg-sky-500 hover:bg-sky-600 text-white" asChild>
               <a href="tel:+41797591983">
                 <Phone className="h-4 w-4 mr-2" />
                 079 759 19 83
@@ -223,49 +189,37 @@ export default function NavbarWithIcons() {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2">
-            {/* Botón de Admin en móvil */}
+          {/* Mobile Menu Button - CON fondo */}
+          <div className="md:hidden flex items-center">
             <button
-              onClick={() => (isAuthenticated ? router.push("/admin/gallery") : setIsLoginModalOpen(true))}
-              className={`p-2 rounded-md ${isScrolled || isServicePage ? "text-gray-700" : "text-white"}`}
-              aria-label=""
-            >
-              <Settings className="h-5 w-5" />
-            </button>
-
-            <button
-              className="p-2 rounded-md"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
+              className="p-2 rounded-md bg-white/80 backdrop-blur-sm shadow-sm text-gray-700"
             >
-              {mobileMenuOpen ? (
-                <X className={isScrolled || isServicePage ? "text-gray-700" : "text-white"} />
-              ) : (
-                <Menu className={isScrolled || isServicePage ? "text-gray-700" : "text-white"} />
-              )}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Mejorado */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white shadow-lg"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden bg-white/90 backdrop-blur-md shadow-lg mt-2 mx-4 rounded-xl overflow-hidden"
             >
-              <div className="container mx-auto px-4 py-3 space-y-1">
+              <div className="py-4 space-y-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
                     href={isServicePage ? `/${item.href}` : item.href}
-                    className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                    className={`flex items-center px-6 py-3 text-base font-medium ${
                       activeSection === item.href.substring(1)
-                        ? "text-sky-600 bg-sky-50"
-                        : "text-gray-700 hover:text-sky-600 hover:bg-sky-50"
+                        ? "text-sky-600 bg-sky-50/70"
+                        : "text-gray-700 hover:text-sky-600 hover:bg-sky-50/70"
                     }`}
                     onClick={(e) => {
                       if (!isServicePage) {
@@ -289,21 +243,35 @@ export default function NavbarWithIcons() {
                   </Link>
                 ))}
 
+                {/* Botón de Admin MOVIDO al menú desplegable */}
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    isAuthenticated ? router.push("/admin/gallery") : setIsLoginModalOpen(true)
+                  }}
+                  className="flex items-center px-6 py-3 text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50/70 w-full"
+                >
+                  <span className="mr-3 text-sky-500">
+                    <Settings className="h-4 w-4" />
+                  </span>
+                  Administration
+                </button>
+
                 {isAuthenticated && (
                   <button
                     onClick={handleLogout}
-                    className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50 w-full"
+                    className="flex items-center px-6 py-3 text-base font-medium text-gray-700 hover:text-sky-600 hover:bg-sky-50/70 w-full"
                   >
                     <span className="mr-3 text-sky-500">
                       <LogIn className="h-4 w-4" />
                     </span>
-                 Abmelden
+                    Abmelden
                   </button>
                 )}
 
-                <div className="pt-2">
-                  <Button size="sm" className="w-full bg-sky-500 hover:bg-sky-600 text-white" asChild>
-                    <a href="tel:+41797591983">
+                <div className="px-6 pt-3">
+                  <Button size="sm" className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-lg py-3" asChild>
+                    <a href="tel:+41797591983" className="flex items-center justify-center">
                       <Phone className="h-4 w-4 mr-2" />
                       079 759 19 83
                     </a>
