@@ -97,7 +97,7 @@ export default function ModernHeroSection() {
       </motion.div>
 
       {/* Content overlay */}
-      <div className="relative z-20 h-full flex flex-col justify-center  mt-6">
+      <div className="relative z-20 h-full flex flex-col justify-center  mt-8">
         <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             {/* Main heading with animated gradient */}
@@ -129,13 +129,11 @@ export default function ModernHeroSection() {
                 </AnimatePresence>
 
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white mt-4">
-                     <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto ml-8" priority />
                   <span className="block">FLINK</span>
                   <span className="block bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500">
                     SAUBER
                   </span>
                 </h1>
-                
                 <p className="mt-4 text-xl md:text-2xl text-white/90">Ihr Premium-Reinigungsspezialist</p>
               </div>
             </div>

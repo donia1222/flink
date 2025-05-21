@@ -130,11 +130,11 @@ export default function NavbarWithIcons() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo - sin fondo */}
           <Link href="/#home" className="flex items-center">
-           
+            <Image src="/logo.png" alt="FLINKSAUBER Logo" width={150} height={40} className="h-10 w-auto" priority />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-sm">
+          <nav className="hidden md:flex items-center space-x-1 bg-white/80 backdrop-blur-sm p-2 rounded-lg shadow-sm">
             {navItems.map((item) => (
               <Link
                 key={item.name}
