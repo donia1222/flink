@@ -88,8 +88,8 @@ export default function WhatsappContactSection() {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Adresse",
-      content: "Am Schrägen Weg 12",
-      subtext: "Vaduz / Liechtenstein",
+      content: "Poskahalda 3 ",
+      subtext: "Triesen / Liechtenstein",
       color: "from-indigo-400 to-purple-500",
     },
     {
