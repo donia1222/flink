@@ -152,7 +152,7 @@ export default function ModernAboutSection() {
             {/* Main image */}
             <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl transform transition-transform duration-500">
               <NextImage
-                src="/modern-clean-office.png"
+                src="/modern-blue-office.png"
                 alt="Sauberes Büro"
                 width={600}
                 height={400}

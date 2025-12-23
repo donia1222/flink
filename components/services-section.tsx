@@ -33,7 +33,7 @@ export default function ServicesSection() {
       id: "buroreinigung",
       title: "Büroreinigung",
       description: "Diskrete und gründliche Reinigung für Büroräume",
-      image: "/gallery-3.png",
+      image: "/modern-blue-office.png",
       number: "03",
       color: "from-cyan-500 to-teal-400",
     },
