@@ -19,6 +19,7 @@ export default function ScrollToTop() {
         setShowButton(false)
       }
     }
+    
 
     window.addEventListener("scroll", handleScroll)
 
